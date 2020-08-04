@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user.data, token: token}
     else
-      render json: {error: @user.errors.full_messages}
+      render json: {errors: @user.errors.full_messages}
     end
   end
 

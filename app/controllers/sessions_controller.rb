@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user.data, token: token}
     else
-      render json: {error: "Invalid username or password"}, status: :unauthorized
+      render json: {errors: ["Invalid username or password"]}, status: :unauthorized
     end
   end
 
