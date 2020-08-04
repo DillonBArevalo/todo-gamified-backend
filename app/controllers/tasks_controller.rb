@@ -1,6 +1,12 @@
 class TasksController < ApplicationController
   def index
-    render json: {tasks: @user.tasks}
+    if params[:filter] && params[:filter] != 'all'
+      @tasks = Task.where({user_id: @user.id, complete: params[:filter] == 'complete'})
+    else
+      @tasks = @user.tasks
+    end
+
+    render json: {tasks: @tasks}
   end
 
   def create

@@ -22,14 +22,14 @@ Note that this host url will change if/when this is deployed to production. loca
 
 the following routes are available. Note that any property in the form `[:foo]` is to be replaced with the value of `foo`. I.e. if you're looking for a task with the id of 12 you would run a GET to `/tasks/10/` not `/tasks/[:id]`. Every item in the database has a unique id to be used in this way (unique on that database table, not globally unique between all tables):
 
-| Method | Route | description | parameters (contained in the body property of a fetch request) | reuturn |
+| Method | Route | Description | Parameters (contained in the body property of a fetch request) | Return |
 | --- |  --- | --- | --- | --- |
-| GET | `/tasks` | Get all tasks associated with the authorized user | <ul><li>`filter` - `string`[`completed`, `uncompleted`, `all`]: returns a subset of the tasks associated with the user. defaults to `all`</li></ul> | An object with a key of "tasks" going to an `array` of [task](#Task) objects |
+| GET | `/tasks` | Get all tasks associated with the authorized user | <ul><li>`filter` - `string`[`complete`, `not complete`, `all`]: returns a subset of the tasks associated with the user. defaults to `all`</li></ul> | An object with a key of "tasks" going to an `array` of [task](#Task) objects |
 | GET | `/tasks/[:id]` | Get a single task by task id | &mdash; | A [task](#Task) object |
-| POST | `/tasks` | Create a new task for the authorized user | <ul><li>`title` - `string` required.</li><li>`complete` - `boolean` defaults to `false`</li></ul> | The newly created [task](#Task) object or errors if not successful |
+| POST | `/tasks` | Create a new task for the authorized user | `task` going to an object with the following properties: <ul><li>`title` - `string` required.</li><li>`complete` - `boolean` defaults to `false` if not passed</li></ul> | The newly created [task](#Task) object or errors if not successful |
 | PATCH | `/tasks/[:id]` | Update a task. Parameters provided will be modified to provided values, parameters not provided will remain as they were | <ul><li>`title` - `string`</li><li>`complete` - `boolean`</li></ul> | The updated [task](#Task) object |
 | DELETE | `/tasks/[:id]` | Delete a task | &mdash; | &mdash; |
-| POST | `/users` | Create a new user | <ul><li>`username` - `string` required</li><li>`password` - `string` required. length >= 6</li></ul> | The new [user](#User) object and an authentication key if successful. errors if not successful |
+| POST | `/users` | Create a new user | `user` going to an object with the following properties: <ul><li>`username` - `string` required</li><li>`password` - `string` required. length >= 6</li></ul> | The new [user](#User) object and an authentication key if successful. errors if not successful |
 | POST | `/sessions` | Authenticate an existing user for logging in | <ul><li>`username` - `string`</li><li>`password` - `string`</li></ul> | Signed in [user](#User) object and authentication key if successful, errors if not successful |
 
 ### Passing data in a POST or PATCH request
