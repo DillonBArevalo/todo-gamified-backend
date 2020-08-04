@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :authorized
+
   def new
     @user = User.new
     render layout: 'sessions'
@@ -7,18 +9,11 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(username: login_params[:username])
     if @user && @user.try(:authenticate, login_params[:password])
-      session[:id] = @user.id
-      redirect_to '/'
+      token = encode_token({user_id: @user.id})
+      render json: {user: @user.data, token: token}
     else
-      @errors = ['Username or password is incorrect!']
-      @user = User.new({username: login_params[:username]}) unless @user
-      render 'new'
+      render json: {error: "Invalid username or password"}, status: :unauthorized
     end
-  end
-
-  def destroy
-    session[:id] = nil
-    redirect_to '/'
   end
 
   private
