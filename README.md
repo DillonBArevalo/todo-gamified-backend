@@ -2,9 +2,13 @@
 
 ## Configuring this on your machine
 
+### Running tasks:
+
+Tasks are run via docker. prefix any rails, rake, or bundle tasks with `docker-compose run web`.
+
 Use docker to get the image and install things (To be updated!).
 
-## Starting this app:
+### Starting this app:
 
 if everything is installed and ready:
 `docker-compose up`
